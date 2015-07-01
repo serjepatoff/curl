@@ -1,0 +1,315 @@
+<<<#!/bin/bash
+
+export IPHONEOS_DEPLOYMENT_TARGET="6.0"
+export CC="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang"
+
+ARCH="armv7"
+export CFLAGS="-arch ${ARCH} -pipe -Os -gdwarf-2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
+export LDFLAGS="-arch ${ARCH} -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
+make distclean
+./configure --disable-shared --enable-static --host="${ARCH}-apple-darwin" --enable-threaded-resolver --with-darwinssl
+make -j `sysctl -n hw.logicalcpu_max`
+cp lib/.libs/libcurl.a "${HOME}/Desktop/libcurl-${ARCH}.a"
+cp include/curl/curlbuild.h ~/Desktop/curlbuild32.h
+
+ARCH="armv7s"
+export CFLAGS="-arch ${ARCH} -pipe -Os -gdwarf-2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
+export LDFLAGS="-arch ${ARCH} -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
+make distclean
+./configure --disable-shared --enable-static --host="${ARCH}-apple-darwin" --enable-threaded-resolver --with-darwinssl
+make -j `sysctl -n hw.logicalcpu_max`
+cp lib/.libs/libcurl.a "${HOME}/Desktop/libcurl-${ARCH}.a"
+
+ARCH="arm64"
+export IPHONEOS_DEPLOYMENT_TARGET="7.0"
+export CFLAGS="-arch ${ARCH} -pipe -Os -gdwarf-2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
+export LDFLAGS="-arch ${ARCH} -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
+make distclean
+./configure --disable-shared --enable-static --host="aarch64-apple-darwin" --enable-threaded-resolver --with-darwinssl
+make -j `sysctl -n hw.logicalcpu_max`
+cp lib/.libs/libcurl.a "${HOME}/Desktop/libcurl-${ARCH}.a"
+cp include/curl/curlbuild.h ~/Desktop/curlbuild64.h
+
+ARCH="i386"
+export IPHONEOS_DEPLOYMENT_TARGET="6.0"
+export CFLAGS="-arch ${ARCH} -pipe -Os -gdwarf-2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk"
+export CPPFLAGS="-D__IPHONE_OS_VERSION_MIN_REQUIRED=${IPHONEOS_DEPLOYMENT_TARGET%%.*}0000"
+export LDFLAGS="-arch ${ARCH} -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk"
+make distclean
+./configure --disable-shared --enable-static --host="${ARCH}-apple-darwin" --enable-threaded-resolver --with-darwinssl
+make -j `sysctl -n hw.logicalcpu_max`
+cp lib/.libs/libcurl.a "${HOME}/Desktop/libcurl-${ARCH}.a"
+
+ARCH="x86_64"
+export IPHONEOS_DEPLOYMENT_TARGET="7.0"
+export CFLAGS="-arch ${ARCH} -pipe -Os -gdwarf-2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk"
+export CPPFLAGS="-D__IPHONE_OS_VERSION_MIN_REQUIRED=${IPHONEOS_DEPLOYMENT_TARGET%%.*}0000"
+export LDFLAGS="-arch ${ARCH} -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk"
+make distclean
+./configure --disable-shared --enable-static --host="${ARCH}-apple-darwin" --enable-threaded-resolver --with-darwinssl
+make -j `sysctl -n hw.logicalcpu_max`
+cp lib/.libs/libcurl.a "${HOME}/Desktop/libcurl-${ARCH}.a"
+
+lipo -create -output "${HOME}/Desktop/libcurl.a" "${HOME}/Desktop/libcurl-armv7.a" "${HOME}/Desktop/libcurl-armv7s.a" "${HOME}/Desktop/libcurl-arm64.a" "${HOME}/Desktop/libcurl-i386.a" "${HOME}/Desktop/libcurl-x86_64.a"
+
+
+
+
+
+
+******** Making libcurl for iPhoneOS 8.3 armv7s ********
+
+Making all in lib
+^make  all-am
+
+^cmdefs  = -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_STATICLIB -DDEBUGBUILD -DCURLDEBUG
+^cmdefs2 = -pipe -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk -Qunused-arguments -g -O0 -pedantic
+
+^defs1 		= ^cmdefs -DCURL_HIDDEN_SYMBOLS 
+^defs2 		= -fvisibility=hidden ^cmdefs2
+^warns1 	= -Wall -Wextra -Wpointer-arith -Wwrite-strings -Wshadow -Winline -Wnested-externs -Wmissing-declarations -Wmissing-prototypes -Wno-long-long -Wfloat-equal -Wno-multichar -Wsign-compare -Wundef -Wno-format-nonliteral -Wendif-labels -Wstrict-prototypes -Wdeclaration-after-statement -Wcast-align -Wno-system-headers -Wshorten-64-to-32 -Wunused
+
+^defs_ut 	= ^cmdefs -DUNITTESTS           
+^defs2_ut 	= ^cmdefs2
+
+
+^los = libcurl_la-file.lo libcurl_la-timeval.lo libcurl_la-base64.lo libcurl_la-hostip.lo libcurl_la-progress.lo libcurl_la-formdata.lo libcurl_la-cookie.lo libcurl_la-http.lo libcurl_la-sendf.lo libcurl_la-ftp.lo libcurl_la-url.lo libcurl_la-dict.lo libcurl_la-if2ip.lo libcurl_la-speedcheck.lo libcurl_la-ldap.lo libcurl_la-version.lo libcurl_la-getenv.lo libcurl_la-escape.lo libcurl_la-mprintf.lo libcurl_la-telnet.lo libcurl_la-netrc.lo libcurl_la-getinfo.lo libcurl_la-transfer.lo libcurl_la-strequal.lo libcurl_la-easy.lo libcurl_la-security.lo libcurl_la-curl_fnmatch.lo libcurl_la-fileinfo.lo libcurl_la-ftplistparser.lo libcurl_la-wildcard.lo libcurl_la-krb5.lo libcurl_la-memdebug.lo libcurl_la-http_chunks.lo libcurl_la-strtok.lo libcurl_la-connect.lo libcurl_la-llist.lo libcurl_la-hash.lo libcurl_la-multi.lo libcurl_la-content_encoding.lo libcurl_la-share.lo libcurl_la-http_digest.lo libcurl_la-md4.lo libcurl_la-md5.lo libcurl_la-http_negotiate.lo libcurl_la-inet_pton.lo libcurl_la-strtoofft.lo libcurl_la-strerror.lo libcurl_la-amigaos.lo libcurl_la-hostasyn.lo libcurl_la-hostip4.lo libcurl_la-hostip6.lo libcurl_la-hostsyn.lo libcurl_la-inet_ntop.lo libcurl_la-parsedate.lo libcurl_la-select.lo libcurl_la-tftp.lo libcurl_la-splay.lo libcurl_la-strdup.lo libcurl_la-socks.lo libcurl_la-ssh.lo libcurl_la-rawstr.lo libcurl_la-curl_addrinfo.lo libcurl_la-socks_gssapi.lo libcurl_la-socks_sspi.lo libcurl_la-curl_sspi.lo libcurl_la-slist.lo libcurl_la-nonblock.lo libcurl_la-curl_memrchr.lo libcurl_la-imap.lo libcurl_la-pop3.lo libcurl_la-smtp.lo libcurl_la-pingpong.lo libcurl_la-rtsp.lo libcurl_la-curl_threads.lo libcurl_la-warnless.lo libcurl_la-hmac.lo libcurl_la-curl_rtmp.lo libcurl_la-openldap.lo libcurl_la-curl_gethostname.lo libcurl_la-gopher.lo libcurl_la-idn_win32.lo libcurl_la-http_negotiate_sspi.lo libcurl_la-http_proxy.lo libcurl_la-non-ascii.lo libcurl_la-asyn-ares.lo libcurl_la-asyn-thread.lo libcurl_la-curl_gssapi.lo libcurl_la-curl_ntlm.lo libcurl_la-curl_ntlm_wb.lo libcurl_la-curl_ntlm_core.lo libcurl_la-curl_ntlm_msgs.lo libcurl_la-curl_sasl.lo libcurl_la-curl_multibyte.lo libcurl_la-hostcheck.lo libcurl_la-conncache.lo libcurl_la-pipeline.lo libcurl_la-dotdot.lo libcurl_la-x509asn1.lo libcurl_la-http2.lo libcurl_la-curl_sasl_sspi.lo libcurl_la-smb.lo libcurl_la-curl_sasl_gssapi.lo libcurl_la-curl_endian.lo libcurl_la-curl_des.lo vtls/libcurl_la-openssl.lo vtls/libcurl_la-gtls.lo vtls/libcurl_la-vtls.lo vtls/libcurl_la-nss.lo vtls/libcurl_la-polarssl.lo vtls/libcurl_la-polarssl_threadlock.lo vtls/libcurl_la-axtls.lo vtls/libcurl_la-cyassl.lo vtls/libcurl_la-schannel.lo vtls/libcurl_la-darwinssl.lo vtls/libcurl_la-gskit.lo
+
+^objs = libcurl_la-file.o libcurl_la-timeval.o libcurl_la-base64.o libcurl_la-hostip.o libcurl_la-progress.o libcurl_la-formdata.o libcurl_la-cookie.o libcurl_la-http.o libcurl_la-sendf.o libcurl_la-ftp.o libcurl_la-url.o libcurl_la-dict.o libcurl_la-if2ip.o libcurl_la-speedcheck.o libcurl_la-ldap.o libcurl_la-version.o libcurl_la-getenv.o libcurl_la-escape.o libcurl_la-mprintf.o libcurl_la-telnet.o libcurl_la-netrc.o libcurl_la-getinfo.o libcurl_la-transfer.o libcurl_la-strequal.o libcurl_la-easy.o libcurl_la-security.o libcurl_la-curl_fnmatch.o libcurl_la-fileinfo.o libcurl_la-ftplistparser.o libcurl_la-wildcard.o libcurl_la-krb5.o libcurl_la-memdebug.o libcurl_la-http_chunks.o libcurl_la-strtok.o libcurl_la-connect.o libcurl_la-llist.o libcurl_la-hash.o libcurl_la-multi.o libcurl_la-content_encoding.o libcurl_la-share.o libcurl_la-http_digest.o libcurl_la-md4.o libcurl_la-md5.o libcurl_la-http_negotiate.o libcurl_la-inet_pton.o libcurl_la-strtoofft.o libcurl_la-strerror.o libcurl_la-amigaos.o libcurl_la-hostasyn.o libcurl_la-hostip4.o libcurl_la-hostip6.o libcurl_la-hostsyn.o libcurl_la-inet_ntop.o libcurl_la-parsedate.o libcurl_la-select.o libcurl_la-tftp.o libcurl_la-splay.o libcurl_la-strdup.o libcurl_la-socks.o libcurl_la-ssh.o libcurl_la-rawstr.o libcurl_la-curl_addrinfo.o libcurl_la-socks_gssapi.o libcurl_la-socks_sspi.o libcurl_la-curl_sspi.o libcurl_la-slist.o libcurl_la-nonblock.o libcurl_la-curl_memrchr.o libcurl_la-imap.o libcurl_la-pop3.o libcurl_la-smtp.o libcurl_la-pingpong.o libcurl_la-rtsp.o libcurl_la-curl_threads.o libcurl_la-warnless.o libcurl_la-hmac.o libcurl_la-curl_rtmp.o libcurl_la-openldap.o libcurl_la-curl_gethostname.o libcurl_la-gopher.o libcurl_la-idn_win32.o libcurl_la-http_negotiate_sspi.o libcurl_la-http_proxy.o libcurl_la-non-ascii.o libcurl_la-asyn-ares.o libcurl_la-asyn-thread.o libcurl_la-curl_gssapi.o libcurl_la-curl_ntlm.o libcurl_la-curl_ntlm_wb.o libcurl_la-curl_ntlm_core.o libcurl_la-curl_ntlm_msgs.o libcurl_la-curl_sasl.o libcurl_la-curl_multibyte.o libcurl_la-hostcheck.o libcurl_la-conncache.o libcurl_la-pipeline.o libcurl_la-dotdot.o libcurl_la-x509asn1.o libcurl_la-http2.o libcurl_la-curl_sasl_sspi.o libcurl_la-smb.o libcurl_la-curl_sasl_gssapi.o libcurl_la-curl_endian.o libcurl_la-curl_des.o vtls/libcurl_la-openssl.o vtls/libcurl_la-gtls.o vtls/libcurl_la-vtls.o vtls/libcurl_la-nss.o vtls/libcurl_la-polarssl.o vtls/libcurl_la-polarssl_threadlock.o vtls/libcurl_la-axtls.o vtls/libcurl_la-cyassl.o vtls/libcurl_la-schannel.o vtls/libcurl_la-darwinssl.o vtls/libcurl_la-gskit.o
+
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c timeval.c -o libcurl_la-timeval.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c file.c -o libcurl_la-file.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c hostip.c -o libcurl_la-hostip.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c base64.c -o libcurl_la-base64.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c formdata.c -o libcurl_la-formdata.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c progress.c -o libcurl_la-progress.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c http.c -o libcurl_la-http.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c cookie.c -o libcurl_la-cookie.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c sendf.c -o libcurl_la-sendf.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c ftp.c -o libcurl_la-ftp.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c url.c -o libcurl_la-url.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c dict.c -o libcurl_la-dict.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c if2ip.c -o libcurl_la-if2ip.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c speedcheck.c -o libcurl_la-speedcheck.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c ldap.c -o libcurl_la-ldap.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c version.c -o libcurl_la-version.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c getenv.c -o libcurl_la-getenv.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c escape.c -o libcurl_la-escape.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c mprintf.c -o libcurl_la-mprintf.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c telnet.c -o libcurl_la-telnet.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c netrc.c -o libcurl_la-netrc.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c getinfo.c -o libcurl_la-getinfo.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c transfer.c -o libcurl_la-transfer.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c strequal.c -o libcurl_la-strequal.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c easy.c -o libcurl_la-easy.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c security.c -o libcurl_la-security.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_fnmatch.c -o libcurl_la-curl_fnmatch.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c fileinfo.c -o libcurl_la-fileinfo.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c ftplistparser.c -o libcurl_la-ftplistparser.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c wildcard.c -o libcurl_la-wildcard.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c krb5.c -o libcurl_la-krb5.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c strtok.c -o libcurl_la-strtok.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c http_chunks.c -o libcurl_la-http_chunks.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c memdebug.c -o libcurl_la-memdebug.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c connect.c -o libcurl_la-connect.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c llist.c -o libcurl_la-llist.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c hash.c -o libcurl_la-hash.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c multi.c -o libcurl_la-multi.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c content_encoding.c -o libcurl_la-content_encoding.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c share.c -o libcurl_la-share.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c http_digest.c -o libcurl_la-http_digest.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c md4.c -o libcurl_la-md4.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c md5.c -o libcurl_la-md5.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c http_negotiate.c -o libcurl_la-http_negotiate.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c inet_pton.c -o libcurl_la-inet_pton.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c strtoofft.c -o libcurl_la-strtoofft.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c amigaos.c -o libcurl_la-amigaos.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c strerror.c -o libcurl_la-strerror.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c hostasyn.c -o libcurl_la-hostasyn.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c hostip6.c -o libcurl_la-hostip6.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c hostip4.c -o libcurl_la-hostip4.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c hostsyn.c -o libcurl_la-hostsyn.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c inet_ntop.c -o libcurl_la-inet_ntop.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c parsedate.c -o libcurl_la-parsedate.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c select.c -o libcurl_la-select.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c tftp.c -o libcurl_la-tftp.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c splay.c -o libcurl_la-splay.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c strdup.c -o libcurl_la-strdup.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c ssh.c -o libcurl_la-ssh.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c socks.c -o libcurl_la-socks.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c rawstr.c -o libcurl_la-rawstr.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_addrinfo.c -o libcurl_la-curl_addrinfo.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c socks_gssapi.c -o libcurl_la-socks_gssapi.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c socks_sspi.c -o libcurl_la-socks_sspi.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_sspi.c -o libcurl_la-curl_sspi.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c slist.c -o libcurl_la-slist.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c nonblock.c -o libcurl_la-nonblock.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_memrchr.c -o libcurl_la-curl_memrchr.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c imap.c -o libcurl_la-imap.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c pop3.c -o libcurl_la-pop3.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c smtp.c -o libcurl_la-smtp.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c pingpong.c -o libcurl_la-pingpong.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_threads.c -o libcurl_la-curl_threads.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c rtsp.c -o libcurl_la-rtsp.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c warnless.c -o libcurl_la-warnless.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c hmac.c -o libcurl_la-hmac.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_rtmp.c -o libcurl_la-curl_rtmp.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c openldap.c -o libcurl_la-openldap.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_gethostname.c -o libcurl_la-curl_gethostname.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c http_negotiate_sspi.c -o libcurl_la-http_negotiate_sspi.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c idn_win32.c -o libcurl_la-idn_win32.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c gopher.c -o libcurl_la-gopher.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c http_proxy.c -o libcurl_la-http_proxy.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c non-ascii.c -o libcurl_la-non-ascii.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c asyn-thread.c -o libcurl_la-asyn-thread.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c asyn-ares.c -o libcurl_la-asyn-ares.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_gssapi.c -o libcurl_la-curl_gssapi.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_ntlm.c -o libcurl_la-curl_ntlm.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_ntlm_wb.c -o libcurl_la-curl_ntlm_wb.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_ntlm_core.c -o libcurl_la-curl_ntlm_core.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_ntlm_msgs.c -o libcurl_la-curl_ntlm_msgs.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_sasl.c -o libcurl_la-curl_sasl.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_multibyte.c -o libcurl_la-curl_multibyte.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c hostcheck.c -o libcurl_la-hostcheck.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c conncache.c -o libcurl_la-conncache.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c pipeline.c -o libcurl_la-pipeline.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c x509asn1.c -o libcurl_la-x509asn1.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c dotdot.c -o libcurl_la-dotdot.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c http2.c -o libcurl_la-http2.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_sasl_sspi.c -o libcurl_la-curl_sasl_sspi.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c smb.c -o libcurl_la-smb.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_sasl_gssapi.c -o libcurl_la-curl_sasl_gssapi.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_des.c -o libcurl_la-curl_des.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c curl_endian.c -o libcurl_la-curl_endian.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/openssl.c -o vtls/libcurl_la-openssl.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/gtls.c -o vtls/libcurl_la-gtls.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/vtls.c -o vtls/libcurl_la-vtls.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/nss.c -o vtls/libcurl_la-nss.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/polarssl.c -o vtls/libcurl_la-polarssl.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/polarssl_threadlock.c -o vtls/libcurl_la-polarssl_threadlock.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/axtls.c -o vtls/libcurl_la-axtls.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/cyassl.c -o vtls/libcurl_la-cyassl.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/schannel.c -o vtls/libcurl_la-schannel.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/darwinssl.c -o vtls/libcurl_la-darwinssl.o
+^cc ^defs1 -arch armv7s ^defs2 ^warns1 -c vtls/gskit.c -o vtls/libcurl_la-gskit.o
+
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c file.c -o libcurlu_la-file.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c timeval.c -o libcurlu_la-timeval.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c hostip.c -o libcurlu_la-hostip.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c base64.c -o libcurlu_la-base64.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c progress.c -o libcurlu_la-progress.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c formdata.c -o libcurlu_la-formdata.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c cookie.c -o libcurlu_la-cookie.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c http.c -o libcurlu_la-http.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c sendf.c -o libcurlu_la-sendf.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c ftp.c -o libcurlu_la-ftp.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c url.c -o libcurlu_la-url.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c if2ip.c -o libcurlu_la-if2ip.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c dict.c -o libcurlu_la-dict.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c speedcheck.c -o libcurlu_la-speedcheck.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c ldap.c -o libcurlu_la-ldap.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c version.c -o libcurlu_la-version.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c getenv.c -o libcurlu_la-getenv.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c escape.c -o libcurlu_la-escape.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c mprintf.c -o libcurlu_la-mprintf.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c telnet.c -o libcurlu_la-telnet.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c netrc.c -o libcurlu_la-netrc.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c getinfo.c -o libcurlu_la-getinfo.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c transfer.c -o libcurlu_la-transfer.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c strequal.c -o libcurlu_la-strequal.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c easy.c -o libcurlu_la-easy.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c security.c -o libcurlu_la-security.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_fnmatch.c -o libcurlu_la-curl_fnmatch.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c fileinfo.c -o libcurlu_la-fileinfo.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c ftplistparser.c -o libcurlu_la-ftplistparser.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c wildcard.c -o libcurlu_la-wildcard.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c krb5.c -o libcurlu_la-krb5.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c memdebug.c -o libcurlu_la-memdebug.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c http_chunks.c -o libcurlu_la-http_chunks.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c strtok.c -o libcurlu_la-strtok.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c connect.c -o libcurlu_la-connect.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c hash.c -o libcurlu_la-hash.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c llist.c -o libcurlu_la-llist.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c multi.c -o libcurlu_la-multi.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c content_encoding.c -o libcurlu_la-content_encoding.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c share.c -o libcurlu_la-share.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c http_digest.c -o libcurlu_la-http_digest.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c md4.c -o libcurlu_la-md4.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c http_negotiate.c -o libcurlu_la-http_negotiate.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c md5.c -o libcurlu_la-md5.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c inet_pton.c -o libcurlu_la-inet_pton.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c strtoofft.c -o libcurlu_la-strtoofft.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c hostasyn.c -o libcurlu_la-hostasyn.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c strerror.c -o libcurlu_la-strerror.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c amigaos.c -o libcurlu_la-amigaos.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c hostip4.c -o libcurlu_la-hostip4.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c hostip6.c -o libcurlu_la-hostip6.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c hostsyn.c -o libcurlu_la-hostsyn.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c inet_ntop.c -o libcurlu_la-inet_ntop.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c parsedate.c -o libcurlu_la-parsedate.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c select.c -o libcurlu_la-select.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c tftp.c -o libcurlu_la-tftp.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c splay.c -o libcurlu_la-splay.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c strdup.c -o libcurlu_la-strdup.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c socks.c -o libcurlu_la-socks.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c ssh.c -o libcurlu_la-ssh.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c rawstr.c -o libcurlu_la-rawstr.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_addrinfo.c -o libcurlu_la-curl_addrinfo.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c socks_sspi.c -o libcurlu_la-socks_sspi.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c socks_gssapi.c -o libcurlu_la-socks_gssapi.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_sspi.c -o libcurlu_la-curl_sspi.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c slist.c -o libcurlu_la-slist.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_memrchr.c -o libcurlu_la-curl_memrchr.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c nonblock.c -o libcurlu_la-nonblock.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c imap.c -o libcurlu_la-imap.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c pop3.c -o libcurlu_la-pop3.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c rtsp.c -o libcurlu_la-rtsp.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c pingpong.c -o libcurlu_la-pingpong.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c smtp.c -o libcurlu_la-smtp.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_threads.c -o libcurlu_la-curl_threads.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c warnless.c -o libcurlu_la-warnless.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c hmac.c -o libcurlu_la-hmac.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_rtmp.c -o libcurlu_la-curl_rtmp.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c openldap.c -o libcurlu_la-openldap.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_gethostname.c -o libcurlu_la-curl_gethostname.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c gopher.c -o libcurlu_la-gopher.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c idn_win32.c -o libcurlu_la-idn_win32.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c http_negotiate_sspi.c -o libcurlu_la-http_negotiate_sspi.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c non-ascii.c -o libcurlu_la-non-ascii.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c http_proxy.c -o libcurlu_la-http_proxy.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c asyn-ares.c -o libcurlu_la-asyn-ares.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c asyn-thread.c -o libcurlu_la-asyn-thread.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_gssapi.c -o libcurlu_la-curl_gssapi.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_ntlm.c -o libcurlu_la-curl_ntlm.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_ntlm_wb.c -o libcurlu_la-curl_ntlm_wb.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_ntlm_core.c -o libcurlu_la-curl_ntlm_core.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_sasl.c -o libcurlu_la-curl_sasl.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_ntlm_msgs.c -o libcurlu_la-curl_ntlm_msgs.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_multibyte.c -o libcurlu_la-curl_multibyte.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c hostcheck.c -o libcurlu_la-hostcheck.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c conncache.c -o libcurlu_la-conncache.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c pipeline.c -o libcurlu_la-pipeline.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c dotdot.c -o libcurlu_la-dotdot.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c x509asn1.c -o libcurlu_la-x509asn1.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_sasl_sspi.c -o libcurlu_la-curl_sasl_sspi.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c smb.c -o libcurlu_la-smb.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c http2.c -o libcurlu_la-http2.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_sasl_gssapi.c -o libcurlu_la-curl_sasl_gssapi.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_des.c -o libcurlu_la-curl_des.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c curl_endian.c -o libcurlu_la-curl_endian.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/openssl.c -o vtls/libcurlu_la-openssl.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/gtls.c -o vtls/libcurlu_la-gtls.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/vtls.c -o vtls/libcurlu_la-vtls.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/polarssl.c -o vtls/libcurlu_la-polarssl.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/nss.c -o vtls/libcurlu_la-nss.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/polarssl_threadlock.c -o vtls/libcurlu_la-polarssl_threadlock.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/axtls.c -o vtls/libcurlu_la-axtls.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/cyassl.c -o vtls/libcurlu_la-cyassl.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/schannel.c -o vtls/libcurlu_la-schannel.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/darwinssl.c -o vtls/libcurlu_la-darwinssl.o
+^cc ^defs_ut -arch armv7s ^defs2_ut ^warns1 -c vtls/gskit.c -o vtls/libcurlu_la-gskit.o
+
+^lnk -arch armv7s ^defs2    ^warns1 -version-info 7:0:3 -lz -arch armv7s -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk -framework CoreFoundation -framework Security -o libcurl.la  -rpath /usr/local/lib ^los    
+^lnk -arch armv7s ^defs2_ut ^warns1 -static             -lz -arch armv7s -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk -framework CoreFoundation -framework Security -o libcurlu.la                       ^los
+
+ar cru .libs/libcurl.a ^objs
