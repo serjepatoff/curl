@@ -11,7 +11,6 @@
 		C66EFEEC1B44411B000B5DFE /* asyn-ares.c in Sources */ = {isa = PBXBuildFile; fileRef = C66EFDF11B444119000B5DFE /* asyn-ares.c */; };
 		C66EFEED1B44411B000B5DFE /* asyn-thread.c in Sources */ = {isa = PBXBuildFile; fileRef = C66EFDF21B444119000B5DFE /* asyn-thread.c */; };
 		C66EFEEE1B44411B000B5DFE /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = C66EFDF41B444119000B5DFE /* base64.c */; };
-		C66EFEEF1B44411B000B5DFE /* bundles.c in Sources */ = {isa = PBXBuildFile; fileRef = C66EFDF51B444119000B5DFE /* bundles.c */; };
 		C66EFEF01B44411B000B5DFE /* conncache.c in Sources */ = {isa = PBXBuildFile; fileRef = C66EFE041B44411A000B5DFE /* conncache.c */; };
 		C66EFEF11B44411B000B5DFE /* connect.c in Sources */ = {isa = PBXBuildFile; fileRef = C66EFE061B44411A000B5DFE /* connect.c */; };
 		C66EFEF21B44411B000B5DFE /* content_encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = C66EFE081B44411A000B5DFE /* content_encoding.c */; };
@@ -163,7 +162,6 @@
 		C66EFDF11B444119000B5DFE /* asyn-ares.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "asyn-ares.c"; path = "../../../lib/asyn-ares.c"; sourceTree = SOURCE_ROOT; };
 		C66EFDF21B444119000B5DFE /* asyn-thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "asyn-thread.c"; path = "../../../lib/asyn-thread.c"; sourceTree = SOURCE_ROOT; };
 		C66EFDF41B444119000B5DFE /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = ../../../lib/base64.c; sourceTree = SOURCE_ROOT; };
-		C66EFDF51B444119000B5DFE /* bundles.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bundles.c; path = ../../../lib/bundles.c; sourceTree = SOURCE_ROOT; };
 		C66EFE041B44411A000B5DFE /* conncache.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = conncache.c; path = ../../../lib/conncache.c; sourceTree = SOURCE_ROOT; };
 		C66EFE061B44411A000B5DFE /* connect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = connect.c; path = ../../../lib/connect.c; sourceTree = SOURCE_ROOT; };
 		C66EFE081B44411A000B5DFE /* content_encoding.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = content_encoding.c; path = ../../../lib/content_encoding.c; sourceTree = SOURCE_ROOT; };
@@ -375,7 +373,6 @@
 				C66EFDF11B444119000B5DFE /* asyn-ares.c */,
 				C66EFDF21B444119000B5DFE /* asyn-thread.c */,
 				C66EFDF41B444119000B5DFE /* base64.c */,
-				C66EFDF51B444119000B5DFE /* bundles.c */,
 				C66EFE041B44411A000B5DFE /* conncache.c */,
 				C66EFE061B44411A000B5DFE /* connect.c */,
 				C66EFE081B44411A000B5DFE /* content_encoding.c */,
@@ -621,7 +618,6 @@
 				C66EFF151B44411B000B5DFE /* hostcheck.c in Sources */,
 				C66EFF1B1B44411B000B5DFE /* http_digest.c in Sources */,
 				C66EFF431B44411B000B5DFE /* smtp.c in Sources */,
-				C66EFEEF1B44411B000B5DFE /* bundles.c in Sources */,
 				C66EFF641B44419C000B5DFE /* cyassl.c in Sources */,
 				C66EFF001B44411B000B5DFE /* curl_rtmp.c in Sources */,
 				C66EFEEE1B44411B000B5DFE /* base64.c in Sources */,
