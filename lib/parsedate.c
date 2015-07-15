@@ -340,6 +340,7 @@ static int parsedate(const char *date, time_t *output)
   int millisecnum=-1;
   int yearnum=-1;
   int tzoff=-1;
+  int hmsParsed = 0;
   struct my_tm tm;
   enum assume dignext = DATE_MDAY;
   const char *indate = date; /* save the original pointer */
@@ -395,22 +396,26 @@ static int parsedate(const char *date, time_t *output)
       /* a digit */
       int val;
       char *end;
-        
-      if((secnum == -1) &&
+       
+      if(!hmsParsed &&
          (4 == sscanf(date, "%02d:%02d:%02d.%04d", &hournum, &minnum, &secnum, &millisecnum))) {
         /* time stamp with hours:minutes:seconds.milliseconds */
         date += 13;
+        hmsParsed = 1;
       }
-      else if((millisecnum == -1) &&
+      else if(!hmsParsed &&
          (3 == sscanf(date, "%02d:%02d:%02d", &hournum, &minnum, &secnum))) {
         /* time stamp with hours:minutes:seconds */
         date += 8;
+        millisecnum = 0;
+        hmsParsed = 1;
       }
-      else if((secnum == -1) &&
+      else if(!hmsParsed &&
               (2 == sscanf(date, "%02d:%02d", &hournum, &minnum))) {
         /* time stamp with hours:minutes */
         date += 5;
-        secnum = 0;
+        millisecnum = secnum = 0;
+        hmsParsed = 1;
       }
       else {
         long lval;
