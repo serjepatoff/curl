@@ -337,14 +337,15 @@ static int parsedate(const char *date, time_t *output)
   int hournum=-1;
   int minnum=-1;
   int secnum=-1;
+  int millisecnum=-1;
   int yearnum=-1;
   int tzoff=-1;
   struct my_tm tm;
   enum assume dignext = DATE_MDAY;
   const char *indate = date; /* save the original pointer */
-  int part = 0; /* max 6 parts */
+  int part = 0; /* max 7 parts */
 
-  while(*date && (part < 6)) {
+  while(*date && (part < 7)) {
     bool found=FALSE;
 
     skip(&date);
@@ -376,6 +377,14 @@ static int parsedate(const char *date, time_t *output)
         if(tzoff != -1)
           found = TRUE;
       }
+        
+      if(!found && (tzoff == -1 || (part == 6 && wdaynum != -1) || part == 5)) {
+        int ltzoff = checktz(buf);
+          if(ltzoff != -1) {
+            tzoff += ltzoff;
+            found = TRUE;
+          }
+      }
 
       if(!found)
         return PARSEDATE_FAIL; /* bad string */
@@ -386,14 +395,20 @@ static int parsedate(const char *date, time_t *output)
       /* a digit */
       int val;
       char *end;
+        
       if((secnum == -1) &&
+         (4 == sscanf(date, "%02d:%02d:%02d.%04d", &hournum, &minnum, &secnum, &millisecnum))) {
+        /* time stamp with hours:minutes:seconds.milliseconds */
+        date += 13;
+      }
+      else if((millisecnum == -1) &&
          (3 == sscanf(date, "%02d:%02d:%02d", &hournum, &minnum, &secnum))) {
-        /* time stamp! */
+        /* time stamp with hours:minutes:seconds */
         date += 8;
       }
       else if((secnum == -1) &&
               (2 == sscanf(date, "%02d:%02d", &hournum, &minnum))) {
-        /* time stamp without seconds */
+        /* time stamp with hours:minutes */
         date += 5;
         secnum = 0;
       }
