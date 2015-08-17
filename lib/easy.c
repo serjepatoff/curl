@@ -1137,3 +1137,13 @@ CURLcode curl_easy_send(CURL *curl, const void *buffer, size_t buflen,
 
   return result;
 }
+
+CURL_EXTERN CURLcode curl_easy_threadsafe_shutdown(CURL *curl) {
+    struct SessionHandle *data = (struct SessionHandle *)curl;
+    if (data && data->multi) {
+        __sync_fetch_and_add(&data->multi->forceDisconnect, 1);
+        data->multi->recheckstate = 1;
+    }
+    
+    return CURLE_OK;
+}

@@ -1086,11 +1086,20 @@ static CURLMcode multi_runsingle(struct Curl_multi *multi,
           connclose(data->easy_conn, "Disconnected with pending data");
           disconnect_conn = TRUE;
         }
+          
         result = CURLE_OPERATION_TIMEDOUT;
         (void)Curl_done(&data->easy_conn, result, TRUE);
         /* Skip the statemachine and go directly to error handling section. */
         goto statemachine_end;
       }
+    }
+      
+    if (data->multi->forceDisconnect) {
+      data->multi->forceDisconnect = 0;
+      connclose(data->easy_conn, "Force-disconnect from other thread");
+      disconnect_conn = TRUE;
+      result = CURLE_FORCE_DISCONNECTED;
+      goto statemachine_end;
     }
 
     switch(data->mstate) {
