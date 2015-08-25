@@ -95,8 +95,9 @@ CURL_EXTERN CURLcode curl_easy_recv(CURL *curl, void *buffer, size_t buflen,
 CURL_EXTERN CURLcode curl_easy_send(CURL *curl, const void *buffer,
                                     size_t buflen, size_t *n);
     
-CURL_EXTERN CURLcode curl_easy_threadsafe_shutdown(CURL *curl);
-
+CURL_EXTERN CURLcode curl_easy_set_force_disconnect_flag(CURL *curl);
+CURL_EXTERN CURLcode curl_easy_clear_force_disconnect_flag(CURL *curl);
+    
 #ifdef  __cplusplus
 }
 #endif
