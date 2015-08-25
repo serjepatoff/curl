@@ -773,6 +773,10 @@ static CURLcode easy_perform(struct SessionHandle *data, bool events)
 
   if(!data)
     return CURLE_BAD_FUNCTION_ARGUMENT;
+    
+  if (data->multi_easy && data->multi_easy->forceDisconnect) {
+    return CURLE_FORCE_DISCONNECTED;
+  }
 
   if(data->multi) {
     failf(data, "easy handle already used in multi handle");
@@ -1138,11 +1142,21 @@ CURLcode curl_easy_send(CURL *curl, const void *buffer, size_t buflen,
   return result;
 }
 
-CURL_EXTERN CURLcode curl_easy_threadsafe_shutdown(CURL *curl) {
+CURL_EXTERN CURLcode curl_easy_set_force_disconnect_flag(CURL *curl) {
     struct SessionHandle *data = (struct SessionHandle *)curl;
-    if (data && data->multi) {
-        __sync_fetch_and_add(&data->multi->forceDisconnect, 1);
-        data->multi->recheckstate = 1;
+    if (data && data->multi_easy) {
+        __sync_fetch_and_add(&data->multi_easy->forceDisconnect, 1);
+        data->multi_easy->recheckstate = 1;
+    }
+    
+    return CURLE_OK;
+}
+
+CURL_EXTERN CURLcode curl_easy_clear_force_disconnect_flag(CURL *curl) {
+    struct SessionHandle *data = (struct SessionHandle *)curl;
+    if (data && data->multi_easy) {
+        __sync_fetch_and_and(&data->multi_easy->forceDisconnect, 0);
+        data->multi_easy->recheckstate = 1;
     }
     
     return CURLE_OK;

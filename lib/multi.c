@@ -1094,8 +1094,7 @@ static CURLMcode multi_runsingle(struct Curl_multi *multi,
       }
     }
       
-    if (data->multi->forceDisconnect) {
-      data->multi->forceDisconnect = 0;
+    if (data && data->multi && data->multi->forceDisconnect && data->easy_conn) {
       connclose(data->easy_conn, "Force-disconnect from other thread");
       disconnect_conn = TRUE;
       result = CURLE_FORCE_DISCONNECTED;
