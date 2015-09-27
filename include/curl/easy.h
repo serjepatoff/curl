@@ -97,6 +97,7 @@ CURL_EXTERN CURLcode curl_easy_send(CURL *curl, const void *buffer,
     
 CURL_EXTERN CURLcode curl_easy_set_force_disconnect_flag(CURL *curl);
 CURL_EXTERN CURLcode curl_easy_clear_force_disconnect_flag(CURL *curl);
+CURL_EXTERN uintptr_t curl_easy_is_force_disconnect_flag_set(CURL *curl);
     
 #ifdef  __cplusplus
 }
