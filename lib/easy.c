@@ -1161,3 +1161,12 @@ CURL_EXTERN CURLcode curl_easy_clear_force_disconnect_flag(CURL *curl) {
     
     return CURLE_OK;
 }
+
+CURL_EXTERN uintptr_t curl_easy_is_force_disconnect_flag_set(CURL *curl) {
+    struct SessionHandle *data = (struct SessionHandle *)curl;
+    if (data && data->multi_easy) {
+        return data->multi_easy->forceDisconnect;
+    }
+
+    return 0;
+}

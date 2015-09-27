@@ -148,7 +148,7 @@ struct Curl_multi {
   struct timeval timer_lastcall; /* the fixed time for the timeout for the
                                     previous callback */
     
-  uint32_t forceDisconnect;
+  uintptr_t forceDisconnect;
 };
 
 #endif /* HEADER_CURL_MULTIHANDLE_H */
