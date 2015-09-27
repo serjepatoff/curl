@@ -757,6 +757,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -808,7 +809,7 @@
 				LLVM_LTO = NO;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				STRIP_STYLE = all;
+				STRIP_STYLE = "non-global";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
