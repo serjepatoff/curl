@@ -2651,6 +2651,11 @@ CURLcode Curl_setopt(struct SessionHandle *data, CURLoption option,
   case CURLOPT_PIPEWAIT:
     data->set.pipewait = (0 != va_arg(param, long))?TRUE:FALSE;
     break;
+
+  case CURLOPT_EWS_NTLM_RESHAKE:
+    data->set.ews_ntlm_reshake = (0 != va_arg(param, long))?TRUE:FALSE;
+    break;
+
   default:
     /* unknown tag and its companion, just ignore: */
     result = CURLE_UNKNOWN_OPTION;

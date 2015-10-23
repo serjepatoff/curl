@@ -1642,6 +1642,8 @@ typedef enum {
   /* Wait/don't wait for pipe/mutex to clarify */
   CINIT(PIPEWAIT, LONG, 237),
 
+  CINIT(EWS_NTLM_RESHAKE, LONG, 238),
+
   CURLOPT_LASTENTRY /* the last unused */
 } CURLoption;
 

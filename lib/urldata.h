@@ -1627,6 +1627,7 @@ struct UserDefined {
   bool pipewait;        /* wait for pipe/multiplex status before starting a
                            new connection */
   long expect_100_timeout; /* in milliseconds */
+  bool ews_ntlm_reshake;
 };
 
 struct Names {
