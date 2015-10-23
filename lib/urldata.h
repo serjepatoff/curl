@@ -1661,6 +1661,7 @@ struct UserDefined {
   struct SessionHandle *stream_depends_on;
   bool stream_depends_e; /* set or don't set the Exclusive bit */
   int stream_weight;
+  bool ews_ntlm_reshake;
 };
 
 struct Names {

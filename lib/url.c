@@ -2663,6 +2663,9 @@ CURLcode Curl_setopt(struct SessionHandle *data, CURLoption option,
   case CURLOPT_PIPEWAIT:
     data->set.pipewait = (0 != va_arg(param, long))?TRUE:FALSE;
     break;
+  case CURLOPT_EWS_NTLM_RESHAKE:
+    data->set.ews_ntlm_reshake = (0 != va_arg(param, long))?TRUE:FALSE;
+    break;
   case CURLOPT_STREAM_WEIGHT:
 #ifndef USE_NGHTTP2
     return CURLE_NOT_BUILT_IN;
