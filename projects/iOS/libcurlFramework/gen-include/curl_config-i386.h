@@ -75,6 +75,7 @@
 
 /* Define if you want to enable IPv6 support */
 #define ENABLE_IPV6 1
+#define CURLRES_IPV6 1
 
 /* Define to the type of arg 2 for gethostname. */
 #define GETHOSTNAME_TYPE_ARG2 size_t
